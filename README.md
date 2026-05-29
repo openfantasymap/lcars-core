@@ -9,7 +9,7 @@ It covers the full LCARS vocabulary:
 | Category | Components |
 |----------|-----------|
 | **Primitives** | elbow, bar (h/v + end-caps + titles), bracket/frame, text box & readout |
-| **Tools** | button, toggle switch, slider (h/v), keypad, status indicator |
+| **Tools** | button, toggle switch, slider (h/v), keypad, status indicator, d-pad |
 | **Systems** | radial gauge, bar graph / equalizer, data cascade, warp core, condition alert |
 | **Navigation** | sidebar nav, tabs, breadcrumb |
 | **Ship nav (CONN)** | bearing compass, sensor scanner (radar), stellar map, helm console |

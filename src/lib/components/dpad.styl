@@ -1,0 +1,45 @@
+// =============================================================================
+//  Component · D-pad (directional control)
+// -----------------------------------------------------------------------------
+//  An 8-way directional pad. The library ships the styling; bring the SVG with
+//  the documented classes (corner · cardinal · hub, all under .lcars-dpad).
+//
+//    <div class="lcars-dpad" style="--lcars-dpad-size:12rem">
+//      <svg viewBox="0 0 80 80">
+//        <path class="seg corner"   data-dir="NE" d="…"></path>
+//        <path class="seg cardinal" data-dir="N"  d="…"></path>
+//        …
+//        <path class="hub" d="m11 34v12h23v23h12v-23h23v-12h-23v-23h-12v23z"></path>
+//      </svg>
+//    </div>
+//
+//  Size via --lcars-dpad-size. Segment colours follow the theme roles.
+//  Inner class names are deliberately scoped to .lcars-dpad to avoid clobbering
+//  generic `.corner` / `.hub` selectors elsewhere.
+// =============================================================================
+
+.lcars-dpad
+  --lcars-dpad-size 12rem
+  display inline-block
+  width var(--lcars-dpad-size, 12rem)
+  max-width 100%
+
+  svg
+    display block
+    width 100%
+    height auto
+
+  .seg
+    cursor pointer
+  .corner
+    fill var(--lcars-primary, $lcars-primary)
+    transition fill 0.1s ease
+  .cardinal
+    fill var(--lcars-secondary, $lcars-secondary)
+    transition fill 0.1s ease
+  .hub
+    fill var(--lcars-tertiary, $lcars-tertiary)
+  .seg:hover
+    filter brightness(1.12)
+  .seg:active
+    fill var(--lcars-accent, $lcars-accent)
