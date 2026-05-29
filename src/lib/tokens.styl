@@ -1,0 +1,121 @@
+// =============================================================================
+//  LCARS · Design Tokens
+// -----------------------------------------------------------------------------
+//  The palette and metrics that every component reads from.
+//
+//  Two layers:
+//    1. Stylus variables ($lcars-*) — compile-time defaults, used by mixins.
+//    2. CSS custom properties (--lcars-*) — emitted on the `.lcars` root so a
+//       host app can re-skin the whole UI at runtime (light theme, red-alert
+//       theme, per-department colours…) without recompiling Stylus.
+//
+//  Components always read the CSS variable with the Stylus value as fallback,
+//  e.g.  background-color: var(--lcars-primary, $lcars-primary)
+//  so they work whether or not the host overrides anything.
+// =============================================================================
+
+// ---- Named LCARS colour stops ----------------------------------------------
+// The canonical Okuda palette. Names follow common LCARS community usage.
+$lcars-black            = #000000
+$lcars-space-white      = #f5f6fa
+
+// Warm signature family
+$lcars-orange           = #ff9900   // "lcars-orange"
+$lcars-golden-tanoi     = #ffcc66   // the classic #fc6
+$lcars-butterscotch     = #ff9966
+$lcars-pale-canary      = #ffff99
+$lcars-sunflower        = #ffcc00
+$lcars-tomato           = #cc6666   // "mars" / red-damask
+
+// Cool family
+$lcars-periwinkle       = #99ccff   // "anakiwa"
+$lcars-blue-bell        = #9999cc
+$lcars-lilac            = #cc99cc   // "african-violet"
+$lcars-hopbush          = #cc6699   // magenta / pink
+$lcars-ice              = #ccddee
+
+// Status family
+$lcars-red-alert        = #ff3030
+$lcars-amber            = #ff9933
+$lcars-okuda-green      = #66cc66
+
+// ---- Semantic roles (Stylus defaults) ---------------------------------------
+$lcars-bg               = $lcars-black
+$lcars-panel            = #0a0a0a
+$lcars-text             = #ffffff
+$lcars-text-invert      = #000000
+
+$lcars-primary          = $lcars-golden-tanoi
+$lcars-secondary        = $lcars-periwinkle
+$lcars-tertiary         = $lcars-lilac
+$lcars-accent           = $lcars-orange
+$lcars-muted            = $lcars-blue-bell
+
+$lcars-danger           = $lcars-red-alert
+$lcars-warning          = $lcars-amber
+$lcars-success          = $lcars-okuda-green
+
+// ---- Metrics -----------------------------------------------------------------
+// LCARS lays out on a grid. The base "unit" is one column wide / one row tall.
+$lcars-gap              = 0.25rem   // standard separation between blocks
+$lcars-unit-w           = 7.5rem    // 1 column
+$lcars-unit-h           = 3rem      // 1 row
+$lcars-row-step         = 3.25rem   // height added per extra row (unit-h + gap)
+$lcars-bar-thickness    = 1.5rem    // standard sweep / bar thickness
+$lcars-radius           = 1.5rem    // pill rounding (= half of unit-h)
+$lcars-radius-lg        = 3.75rem   // big elbow sweep
+$lcars-border           = 0.25rem   // hairline / decorator stripe
+
+$lcars-font             = "Antonio", "Oswald", "HelveticaNeue-CondensedBold", "Arial Narrow", sans-serif
+$lcars-font-mono        = "Antonio", "Consolas", monospace
+
+// =============================================================================
+//  Runtime theme — emit the custom properties on the root.
+// =============================================================================
+.lcars
+  --lcars-bg               $lcars-bg
+  --lcars-panel            $lcars-panel
+  --lcars-text             $lcars-text
+  --lcars-text-invert      $lcars-text-invert
+
+  --lcars-primary          $lcars-primary
+  --lcars-secondary        $lcars-secondary
+  --lcars-tertiary         $lcars-tertiary
+  --lcars-accent           $lcars-accent
+  --lcars-muted            $lcars-muted
+
+  --lcars-danger           $lcars-danger
+  --lcars-warning          $lcars-warning
+  --lcars-success          $lcars-success
+
+  // Named stops, exposed for ad-hoc use in apps
+  --lcars-orange           $lcars-orange
+  --lcars-golden-tanoi     $lcars-golden-tanoi
+  --lcars-butterscotch     $lcars-butterscotch
+  --lcars-pale-canary      $lcars-pale-canary
+  --lcars-sunflower        $lcars-sunflower
+  --lcars-tomato           $lcars-tomato
+  --lcars-periwinkle       $lcars-periwinkle
+  --lcars-blue-bell        $lcars-blue-bell
+  --lcars-lilac            $lcars-lilac
+  --lcars-hopbush          $lcars-hopbush
+  --lcars-ice              $lcars-ice
+  --lcars-red-alert        $lcars-red-alert
+  --lcars-amber            $lcars-amber
+  --lcars-okuda-green      $lcars-okuda-green
+
+  // Metrics
+  --lcars-gap              $lcars-gap
+  --lcars-unit-w           $lcars-unit-w
+  --lcars-unit-h           $lcars-unit-h
+  --lcars-bar-thickness    $lcars-bar-thickness
+  --lcars-radius           $lcars-radius
+  --lcars-radius-lg        $lcars-radius-lg
+  --lcars-border           $lcars-border
+  --lcars-font             $lcars-font
+
+  // Back-compat aliases for the existing lcars-mqtt app, which themes via
+  // --main-color / --secondary-color / --tertiary-color.
+  --main-color             var(--lcars-primary)
+  --secondary-color        var(--lcars-secondary)
+  --tertiary-color         var(--lcars-tertiary)

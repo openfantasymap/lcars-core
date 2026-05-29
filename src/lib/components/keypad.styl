@@ -1,0 +1,61 @@
+// =============================================================================
+//  Component · Keypad
+// -----------------------------------------------------------------------------
+//  A grid of command keys. Keys cycle through the palette for that busy
+//  multi-colour LCARS console look. Set column count with `--cols`.
+//
+//    <div class="lcars-keypad" style="--cols:3">
+//      <button class="lcars-keypad__key">1</button> …
+//    </div>
+// =============================================================================
+
+.lcars-keypad
+  --cols 3
+  display grid
+  grid-template-columns repeat(var(--cols), minmax(3.5rem, 1fr))
+  gap var(--lcars-gap, $lcars-gap)
+  width fit-content
+
+  &__key
+    display flex
+    align-items center
+    justify-content center
+    box-sizing border-box
+    min-width 3.5rem
+    height 3rem
+    padding 0 0.75rem
+    border none
+    border-radius 0.4rem
+    background var(--lcars-primary, $lcars-primary)
+    color var(--lcars-text-invert, $lcars-text-invert)
+    font-family inherit
+    font-size 1.3rem
+    font-weight 700
+    cursor pointer
+    user-select none
+    transition filter 0.1s ease, transform 0.05s ease
+
+    &:hover
+      filter brightness(1.12)
+    &:active
+      transform translateY(1px)
+      background var(--lcars-hopbush, $lcars-hopbush)
+    &:focus-visible
+      outline 0.2rem solid var(--lcars-pale-canary, $lcars-pale-canary)
+      outline-offset 0.1rem
+
+  // Multi-colour cycling across keys
+  &:not(.lcars-keypad--mono) &__key:nth-child(4n+1)
+    background var(--lcars-primary, $lcars-primary)
+  &:not(.lcars-keypad--mono) &__key:nth-child(4n+2)
+    background var(--lcars-secondary, $lcars-secondary)
+  &:not(.lcars-keypad--mono) &__key:nth-child(4n+3)
+    background var(--lcars-tertiary, $lcars-tertiary)
+  &:not(.lcars-keypad--mono) &__key:nth-child(4n+4)
+    background var(--lcars-butterscotch, $lcars-butterscotch)
+
+  // Wide / accent keys
+  &__key--wide
+    grid-column span 2
+  &__key--accent
+    background var(--lcars-danger, $lcars-danger)

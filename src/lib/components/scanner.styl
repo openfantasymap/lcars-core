@@ -1,0 +1,85 @@
+// =============================================================================
+//  Component · Sensor scanner (CONN)
+// -----------------------------------------------------------------------------
+//  A radar scope: concentric range rings, crosshair, a rotating sweep, and
+//  contact blips placed in polar coordinates.
+//
+//    <div class="lcars-scanner" style="--rate:3s;--scope-r:8rem;">
+//      <div class="lcars-scanner__grid"></div>
+//      <div class="lcars-scanner__sweep"></div>
+//      <span class="lcars-scanner__contact" style="--range:60;--bearing:40;"></span>
+//      <span class="lcars-scanner__contact lcars-scanner__contact--hostile"
+//            style="--range:85;--bearing:160;"></span>
+//      <div class="lcars-scanner__hub"></div>
+//    </div>
+//
+//  --range: 0 (centre) … 100 (rim).  --bearing: degrees clockwise from top.
+// =============================================================================
+
+.lcars-scanner
+  --rate 3s
+  --scope-r 8rem
+  --scan-color var(--lcars-success, $lcars-success)
+  position relative
+  width calc(var(--scope-r) * 2)
+  height calc(var(--scope-r) * 2)
+  border-radius 50%
+  background radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.35) 100%), var(--lcars-bg, $lcars-bg)
+  box-shadow inset 0 0 0 3px var(--lcars-primary, $lcars-primary)
+  overflow hidden
+
+  // Range rings + crosshair
+  &__grid
+    position absolute
+    inset 0
+    border-radius 50%
+    background repeating-radial-gradient(circle, transparent 0 calc(25% - 1px), var(--lcars-muted, $lcars-muted) calc(25% - 1px) 25%), linear-gradient(var(--lcars-muted, $lcars-muted), var(--lcars-muted, $lcars-muted)), linear-gradient(var(--lcars-muted, $lcars-muted), var(--lcars-muted, $lcars-muted))
+    background-position center, center, center
+    background-size 100% 100%, 100% 1px, 1px 100%
+    background-repeat no-repeat
+    opacity 0.4
+
+  // Rotating sweep wedge (bright leading edge, transparent trail)
+  &__sweep
+    position absolute
+    inset 0
+    border-radius 50%
+    background conic-gradient(from 0deg, transparent 0deg 300deg, var(--scan-color) 360deg)
+    opacity 0.55
+    animation lcars-scan-sweep var(--rate) linear infinite
+
+  &__hub
+    position absolute
+    left 50%
+    top 50%
+    width 0.7rem
+    height 0.7rem
+    border-radius 50%
+    background var(--lcars-primary, $lcars-primary)
+    transform translate(-50%, -50%)
+    z-index 2
+
+  // Contact blip, placed by polar (--range, --bearing)
+  &__contact
+    position absolute
+    left 50%
+    top 50%
+    width 0.8rem
+    height 0.8rem
+    margin -0.4rem 0 0 -0.4rem
+    border-radius 50%
+    background var(--scan-color)
+    box-shadow 0 0 0.5rem var(--scan-color)
+    transform rotate(calc(var(--bearing, 0) * 1deg)) translateY(calc(var(--range, 50) / 100 * var(--scope-r) * -1))
+    animation lcars-pulse 1.4s ease-in-out infinite
+    z-index 1
+    &--hostile
+      --scan-color var(--lcars-danger, $lcars-danger)
+    &--neutral
+      --scan-color var(--lcars-warning, $lcars-warning)
+
+@keyframes lcars-scan-sweep
+  from
+    transform rotate(0deg)
+  to
+    transform rotate(360deg)

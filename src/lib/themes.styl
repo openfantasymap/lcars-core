@@ -1,0 +1,163 @@
+// =============================================================================
+//  LCARS · Themes
+// -----------------------------------------------------------------------------
+//  A theme is a preset that remaps the --lcars-* roles. Add a theme class on the
+//  SAME element as `.lcars` (so it overrides the defaults set in tokens.styl):
+//
+//      <div class="lcars lcars-theme-klingon"> … </div>
+//
+//  Because every component reads var(--lcars-*), the whole UI re-skins instantly.
+//  Two families:
+//    · Federation eras  — tng · picard · ds9 · voyager
+//    · Factions         — romulan · ferengi · klingon · cardassian
+//
+//  Imported after tokens.styl so equal-specificity (single class) wins by order.
+//  Each theme also remaps the few named stops components touch directly
+//  (pale-canary = highlight/focus, hopbush = active-press, butterscotch = cycle).
+// =============================================================================
+
+// ---- Federation: TNG (the classic look — explicit so you can switch back) ----
+.lcars-theme-tng
+  --lcars-bg            #000000
+  --lcars-panel         #0a0a0a
+  --lcars-text          #ffffff
+  --lcars-primary       #ffcc66
+  --lcars-secondary     #99ccff
+  --lcars-tertiary      #cc99cc
+  --lcars-accent        #ff9900
+  --lcars-muted         #9999cc
+  --lcars-danger        #ff3030
+  --lcars-warning       #ff9933
+  --lcars-success       #66cc66
+  --lcars-pale-canary   #ffff99
+  --lcars-hopbush       #cc6699
+  --lcars-butterscotch  #ff9966
+
+// ---- Federation: Picard (2399) — minimal, cool cyan on deep blue-black ----
+.lcars-theme-picard
+  --lcars-bg            #05080d
+  --lcars-panel         #0c121b
+  --lcars-text          #eaf4ff
+  --lcars-primary       #5fd0e6
+  --lcars-secondary     #8fb8ff
+  --lcars-tertiary      #b9a6ff
+  --lcars-accent        #e0a96d
+  --lcars-muted         #5a6b85
+  --lcars-danger        #ff5a5a
+  --lcars-warning       #f0b45a
+  --lcars-success       #6fe0b0
+  --lcars-pale-canary   #d6f4ff
+  --lcars-hopbush       #7fa8d8
+  --lcars-butterscotch  #8fb8ff
+  --lcars-radius        0.9rem
+  --lcars-radius-lg     2rem
+
+// ---- Federation: DS9 — purple / periwinkle / amber, industrial ----
+.lcars-theme-ds9
+  --lcars-bg            #060509
+  --lcars-panel         #110d1a
+  --lcars-text          #f1ecff
+  --lcars-primary       #b48ead
+  --lcars-secondary     #8fb0e8
+  --lcars-tertiary      #6fb3b8
+  --lcars-accent        #e0973a
+  --lcars-muted         #7d6f9c
+  --lcars-danger        #ff4d4d
+  --lcars-warning       #e8a23a
+  --lcars-success       #7cc6a0
+  --lcars-pale-canary   #e9d9a0
+  --lcars-hopbush       #c879a8
+  --lcars-butterscotch  #e0973a
+
+// ---- Federation: Voyager — gold / lavender / sage ----
+.lcars-theme-voyager
+  --lcars-bg            #050402
+  --lcars-panel         #12100a
+  --lcars-text          #fff4e6
+  --lcars-primary       #f0a830
+  --lcars-secondary     #b0a0e0
+  --lcars-tertiary      #88c0a0
+  --lcars-accent        #ffcf6b
+  --lcars-muted         #9a8fb0
+  --lcars-danger        #ff4a3a
+  --lcars-warning       #ffb13b
+  --lcars-success       #88c0a0
+  --lcars-pale-canary   #ffe9a8
+  --lcars-hopbush       #c98fb0
+  --lcars-butterscotch  #ffb86b
+
+// =============================================================================
+//  Factions
+// =============================================================================
+
+// ---- Klingon Empire — blood-red, forge-orange, angular ----
+.lcars-theme-klingon
+  --lcars-bg            #0a0505
+  --lcars-panel         #190b0b
+  --lcars-text          #f5e2d2
+  --lcars-primary       #cc2b2b
+  --lcars-secondary     #e0843a
+  --lcars-tertiary      #9a9a9a
+  --lcars-accent        #ffb13b
+  --lcars-muted         #6b4a4a
+  --lcars-danger        #ff2020
+  --lcars-warning       #ffae3a
+  --lcars-success       #d6a83a
+  --lcars-pale-canary   #ffd089
+  --lcars-hopbush       #e0843a
+  --lcars-butterscotch  #e0843a
+  --lcars-radius        0.5rem
+  --lcars-radius-lg     1.25rem
+
+// ---- Romulan Star Empire — green / teal, sleek ----
+.lcars-theme-romulan
+  --lcars-bg            #03080a
+  --lcars-panel         #081513
+  --lcars-text          #ddf5ea
+  --lcars-primary       #3fbf7f
+  --lcars-secondary     #4fb0c0
+  --lcars-tertiary      #9fd0a0
+  --lcars-accent        #7fe0a0
+  --lcars-muted         #4a6b60
+  --lcars-danger        #ff5a5a
+  --lcars-warning       #cfd06a
+  --lcars-success       #4fd08a
+  --lcars-pale-canary   #c8f5d8
+  --lcars-hopbush       #4fb0c0
+  --lcars-butterscotch  #7fe0a0
+
+// ---- Cardassian Union — amber / olive, curvy & organic ----
+.lcars-theme-cardassian
+  --lcars-bg            #0c0a04
+  --lcars-panel         #181304
+  --lcars-text          #f3e8c6
+  --lcars-primary       #d9a82e
+  --lcars-secondary     #b8a93a
+  --lcars-tertiary      #9c7b2e
+  --lcars-accent        #e8c850
+  --lcars-muted         #6e6330
+  --lcars-danger        #e0552a
+  --lcars-warning       #e8c850
+  --lcars-success       #a8b84a
+  --lcars-pale-canary   #f0e09a
+  --lcars-hopbush       #c8862e
+  --lcars-butterscotch  #d9a82e
+  --lcars-radius        1.8rem
+  --lcars-radius-lg     4.5rem
+
+// ---- Ferengi Alliance — opulent gold / copper ----
+.lcars-theme-ferengi
+  --lcars-bg            #0a0702
+  --lcars-panel         #181103
+  --lcars-text          #fff0cc
+  --lcars-primary       #e8b423
+  --lcars-secondary     #c8761e
+  --lcars-tertiary      #a8631a
+  --lcars-accent        #ffd24a
+  --lcars-muted         #7a5a20
+  --lcars-danger        #ff5a2a
+  --lcars-warning       #ffd24a
+  --lcars-success       #c8a83a
+  --lcars-pale-canary   #ffe9a0
+  --lcars-hopbush       #c8761e
+  --lcars-butterscotch  #e8a423

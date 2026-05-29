@@ -1,0 +1,61 @@
+// =============================================================================
+//  Component · Status indicator
+// -----------------------------------------------------------------------------
+//  A glowing status light with label. States carry semantic colour.
+//
+//    <span class="lcars-indicator lcars-indicator--online">
+//      <span class="lcars-indicator__light"></span>
+//      <span class="lcars-indicator__label">Warp Core</span>
+//    </span>
+//
+//  States: --online · --standby · --offline · --alert (pulses)
+// =============================================================================
+
+.lcars-indicator
+  display inline-flex
+  align-items center
+  gap 0.5rem
+  font-weight 700
+  text-transform uppercase
+  letter-spacing 0.04em
+
+  &__light
+    flex 0 0 auto
+    width 1rem
+    height 1rem
+    border-radius 50%
+    background var(--lcars-muted, $lcars-muted)
+    box-shadow 0 0 0.5rem currentColor
+
+  &__label
+    color var(--lcars-text, $lcars-text)
+    font-size 1rem
+
+  // States
+  &--online
+    color var(--lcars-success, $lcars-success)
+    .lcars-indicator__light
+      background var(--lcars-success, $lcars-success)
+  &--standby
+    color var(--lcars-warning, $lcars-warning)
+    .lcars-indicator__light
+      background var(--lcars-warning, $lcars-warning)
+  &--offline
+    color var(--lcars-muted, $lcars-muted)
+    .lcars-indicator__light
+      background var(--lcars-muted, $lcars-muted)
+      box-shadow none
+      opacity 0.5
+  &--alert
+    color var(--lcars-danger, $lcars-danger)
+    .lcars-indicator__light
+      background var(--lcars-danger, $lcars-danger)
+      animation lcars-pulse 0.8s ease-in-out infinite
+
+@keyframes lcars-pulse
+  0%, 100%
+    opacity 1
+    transform scale(1)
+  50%
+    opacity 0.35
+    transform scale(0.78)

@@ -1,0 +1,101 @@
+// =============================================================================
+//  Component · Master Systems Display (Engineering)
+// -----------------------------------------------------------------------------
+//  A stylised top-view ship schematic (okudagram). Each section carries a
+//  status class you can bind to live data.
+//
+//    <div class="lcars-msd">
+//      <div class="lcars-msd__section lcars-msd__saucer is-nominal"
+//           data-bind-class="is-critical: saucerHit"></div>
+//      <div class="lcars-msd__section lcars-msd__neck is-nominal"></div>
+//      <div class="lcars-msd__section lcars-msd__hull is-warning"></div>
+//      <div class="lcars-msd__strut lcars-msd__strut--left"></div>
+//      <div class="lcars-msd__strut lcars-msd__strut--right"></div>
+//      <div class="lcars-msd__section lcars-msd__nacelle lcars-msd__nacelle--left is-nominal"></div>
+//      <div class="lcars-msd__section lcars-msd__nacelle lcars-msd__nacelle--right is-critical"></div>
+//      <span class="lcars-msd__label">USS ENTERPRISE · NCC-1701-D</span>
+//    </div>
+//
+//  Section states: is-nominal · is-warning · is-critical (pulses) · is-offline
+// =============================================================================
+
+.lcars-msd
+  position relative
+  width 22rem
+  height 18rem
+  box-sizing border-box
+  background radial-gradient(circle at 50% 35%, rgba(153, 153, 204, 0.08), transparent 60%), var(--lcars-bg, $lcars-bg)
+  border-radius var(--lcars-radius, $lcars-radius)
+  box-shadow inset 0 0 0 3px var(--lcars-primary, $lcars-primary)
+  overflow hidden
+
+  &__section
+    --sec var(--lcars-muted, $lcars-muted)
+    position absolute
+    background var(--sec)
+    box-shadow inset 0 0 0 2px rgba(0, 0, 0, 0.4), 0 0 0.6rem rgba(0, 0, 0, 0.5)
+    transition background 0.25s ease
+    &.is-nominal
+      --sec var(--lcars-success, $lcars-success)
+    &.is-warning
+      --sec var(--lcars-warning, $lcars-warning)
+    &.is-critical
+      --sec var(--lcars-danger, $lcars-danger)
+      animation lcars-pulse 1s ease-in-out infinite
+    &.is-offline
+      --sec var(--lcars-muted, $lcars-muted)
+      opacity 0.3
+
+  // Hull silhouette (top view, bow up)
+  &__saucer
+    left calc(50% - 6rem)
+    top 0.5rem
+    width 12rem
+    height 7rem
+    border-radius 50%
+  &__neck
+    left calc(50% - 1.1rem)
+    top 6.2rem
+    width 2.2rem
+    height 2.8rem
+    border-radius 0.4rem
+  &__hull
+    left calc(50% - 2.5rem)
+    top 8rem
+    width 5rem
+    height 8.6rem
+    border-radius 2.5rem
+  &__nacelle
+    top 5.5rem
+    width 1.9rem
+    height 9.6rem
+    border-radius 0.95rem
+    &--left
+      left calc(50% - 7rem)
+    &--right
+      left calc(50% + 5.1rem)
+
+  &__strut
+    position absolute
+    top 10rem
+    width 3.2rem
+    height 0.55rem
+    background var(--lcars-muted, $lcars-muted)
+    opacity 0.7
+    &--left
+      left calc(50% - 5.7rem)
+      transform rotate(-16deg)
+    &--right
+      left calc(50% + 2.5rem)
+      transform rotate(16deg)
+
+  &__label
+    position absolute
+    left 0.6rem
+    bottom 0.5rem
+    z-index 1
+    font-size 0.78rem
+    font-weight 700
+    text-transform uppercase
+    letter-spacing 0.06em
+    color var(--lcars-muted, $lcars-muted)

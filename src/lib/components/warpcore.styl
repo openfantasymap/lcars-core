@@ -1,0 +1,90 @@
+// =============================================================================
+//  Component · Warp core
+// -----------------------------------------------------------------------------
+//  An animated matter/antimatter reaction column. Plasma pulses flow through a
+//  glowing tube around a central reaction node.
+//
+//    <div class="lcars-warpcore">
+//      <div class="lcars-warpcore__plasma"></div>
+//      <div class="lcars-warpcore__core"></div>
+//    </div>
+//
+//  States: (running by default) · --offline (dim, still) · --critical (fast/red)
+//  Tune speed with `--rate`.
+// =============================================================================
+
+.lcars-warpcore
+  --rate 1.5s
+  --glow var(--lcars-secondary, $lcars-secondary)
+  position relative
+  width 5rem
+  height 18rem
+  border-radius 2.5rem
+  background var(--lcars-bg, $lcars-bg)
+  box-shadow inset 0 0 0 3px var(--lcars-accent, $lcars-accent)
+  overflow hidden
+
+  &__plasma
+    position absolute
+    inset 0.45rem
+    border-radius 2.1rem
+    background repeating-linear-gradient(180deg, var(--glow) 0, var(--lcars-pale-canary, $lcars-pale-canary) 1.1rem, var(--glow) 2.2rem, transparent 2.4rem, transparent 3.6rem)
+    filter brightness(1.25)
+    opacity 0.9
+    animation lcars-warp-flow var(--rate) linear infinite
+
+  // The bright reaction node in the middle
+  &__core
+    position absolute
+    left 50%
+    top 50%
+    transform translate(-50%, -50%)
+    width 3.4rem
+    height 3.4rem
+    border-radius 50%
+    background radial-gradient(circle, var(--lcars-pale-canary, $lcars-pale-canary) 0%, var(--glow) 55%, transparent 75%)
+    animation lcars-warp-throb var(--rate) ease-in-out infinite
+
+  // States
+  &--offline
+    box-shadow inset 0 0 0 3px var(--lcars-muted, $lcars-muted)
+    .lcars-warpcore__plasma
+      animation none
+      opacity 0.18
+      filter grayscale(1) brightness(0.6)
+    .lcars-warpcore__core
+      animation none
+      opacity 0.2
+
+  &--critical
+    --rate 0.5s
+    --glow var(--lcars-danger, $lcars-danger)
+    box-shadow inset 0 0 0 3px var(--lcars-danger, $lcars-danger), 0 0 1.5rem var(--lcars-danger, $lcars-danger)
+
+  // Horizontal mounting (e.g. a nacelle conduit)
+  &--horizontal
+    width 18rem
+    height 5rem
+    .lcars-warpcore__plasma
+      background repeating-linear-gradient(90deg, var(--glow) 0, var(--lcars-pale-canary, $lcars-pale-canary) 1.1rem, var(--glow) 2.2rem, transparent 2.4rem, transparent 3.6rem)
+      animation lcars-warp-flow-h var(--rate) linear infinite
+
+@keyframes lcars-warp-flow
+  from
+    background-position 0 0
+  to
+    background-position 0 -3.6rem
+
+@keyframes lcars-warp-flow-h
+  from
+    background-position 0 0
+  to
+    background-position -3.6rem 0
+
+@keyframes lcars-warp-throb
+  0%, 100%
+    transform translate(-50%, -50%) scale(0.85)
+    opacity 0.85
+  50%
+    transform translate(-50%, -50%) scale(1.12)
+    opacity 1

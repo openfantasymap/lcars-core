@@ -1,0 +1,56 @@
+// =============================================================================
+//  Component · Waveform (Communications)
+// -----------------------------------------------------------------------------
+//  A subspace signal / audio visualiser: symmetric bars around a centre line.
+//  Each bar has a `--value` (0–100); add `--live` to animate an idle carrier.
+//
+//    <div class="lcars-waveform lcars-waveform--live">
+//      <span class="lcars-waveform__bar" style="--value:40;"></span>
+//      <span class="lcars-waveform__bar" style="--value:80;"></span>
+//      …
+//    </div>
+// =============================================================================
+
+.lcars-waveform
+  display flex
+  align-items center
+  justify-content center
+  gap 2px
+  box-sizing border-box
+  height 4.5rem
+  padding 0.4rem 0.6rem
+  background var(--lcars-panel, $lcars-panel)
+  border-radius var(--lcars-radius, $lcars-radius)
+  overflow hidden
+
+  &__bar
+    flex 0 0 auto
+    width 0.25rem
+    height calc(var(--value, 50) * 1%)
+    min-height 2px
+    align-self center
+    border-radius 1px
+    background var(--lcars-accent, $lcars-accent)
+    transition height 0.15s ease
+
+  // Colour variants recolour the trace
+  for $role in $lcars-variant-roles
+    &.lcars-waveform--{$role} .lcars-waveform__bar
+      background role($role)
+
+  // Idle carrier animation (purely visual)
+  &--live .lcars-waveform__bar
+    animation lcars-wave 0.9s ease-in-out infinite alternate
+    transform-origin center
+  &--live .lcars-waveform__bar:nth-child(3n)
+    animation-delay 0.15s
+  &--live .lcars-waveform__bar:nth-child(3n+1)
+    animation-delay 0.3s
+  &--live .lcars-waveform__bar:nth-child(4n)
+    animation-delay 0.45s
+
+@keyframes lcars-wave
+  from
+    transform scaleY(0.3)
+  to
+    transform scaleY(1)

@@ -1,0 +1,92 @@
+// =============================================================================
+//  LCARS · Base & Typography
+// -----------------------------------------------------------------------------
+//  Everything is scoped under `.lcars` so the library can drop into an existing
+//  app without bulldozing global styles. Put `class="lcars"` on a wrapper (or
+//  <body>) and the world goes dark + condensed.
+// =============================================================================
+
+.lcars
+  font-family var(--lcars-font, $lcars-font)
+  color var(--lcars-text, $lcars-text)
+  background-color var(--lcars-bg, $lcars-bg)
+  -webkit-font-smoothing antialiased
+  text-rendering optimizeLegibility
+  line-height 1.2
+
+  *,
+  *::before,
+  *::after
+    box-sizing border-box
+
+  // --- Headings: tall, bold, upper ------------------------------------------
+  h1, h2, h3, h4, h5, h6
+    margin 0 0 0.5rem
+    font-weight 700
+    text-transform uppercase
+    letter-spacing 0.04em
+    line-height 1
+  h1
+    font-size 2.7rem
+  h2
+    font-size 2.2rem
+  h3
+    font-size 1.8rem
+  h4
+    font-size 1.5rem
+  h5
+    font-size 1.25rem
+  h6
+    font-size 1.1rem
+
+  p
+    margin 0 0 0.75rem
+
+  // --- Links ----------------------------------------------------------------
+  a
+    text-decoration none
+    color var(--lcars-primary, $lcars-primary)
+    font-weight 500
+  a:hover,
+  a:focus
+    color var(--lcars-pale-canary, $lcars-pale-canary)
+    background-color rgba(255, 255, 255, 0.04)
+  a:active
+    color var(--lcars-sunflower, $lcars-sunflower)
+
+  // --- Utility text colours -------------------------------------------------
+  .lcars-text-primary
+    color var(--lcars-primary, $lcars-primary)
+  .lcars-text-secondary
+    color var(--lcars-secondary, $lcars-secondary)
+  .lcars-text-tertiary
+    color var(--lcars-tertiary, $lcars-tertiary)
+  .lcars-text-danger
+    color var(--lcars-danger, $lcars-danger)
+  .lcars-text-muted
+    color var(--lcars-muted, $lcars-muted)
+  .lcars-uppercase
+    text-transform uppercase
+  .lcars-mono
+    font-family var(--lcars-font, $lcars-font)
+    font-variant-numeric tabular-nums
+
+  // --- Blink (use sparingly — it is a red-alert klaxon, not decoration) -----
+  .lcars-blink
+    animation lcars-blink 1s steps(1, end) infinite
+
+  // --- Scrollbars, themed ---------------------------------------------------
+  ::-webkit-scrollbar
+    width 0.5rem
+    height 0.5rem
+  ::-webkit-scrollbar-track
+    background var(--lcars-panel, $lcars-panel)
+  ::-webkit-scrollbar-thumb
+    background var(--lcars-primary, $lcars-primary)
+    border-radius 0.25rem
+
+@keyframes lcars-blink
+  0%, 50%
+    opacity 1
+  50.01%, 100%
+    opacity 0.25

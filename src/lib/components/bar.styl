@@ -1,0 +1,83 @@
+// =============================================================================
+//  Component · Bar
+// -----------------------------------------------------------------------------
+//  Horizontal (and vertical) sweeps with rounded end-caps and optional inset
+//  titles — the connective tissue of every LCARS frame.
+//
+//    <div class="lcars-bar-group">
+//      <div class="lcars-bar cap-left"></div>
+//      <div class="lcars-bar fill"><span class="lcars-bar__title">SENSORS</span></div>
+//      <div class="lcars-bar cap-right lcars-bar--decorated"></div>
+//    </div>
+// =============================================================================
+
+// Row container that lays bars out with the standard gap
+.lcars-bar-group
+  display flex
+  flex-direction row
+  align-items stretch
+  gap var(--lcars-gap, $lcars-gap)
+  width 100%
+  height var(--lcars-bar-thickness, $lcars-bar-thickness)
+  &.lcars-bar-group--thick
+    height 3rem
+
+.lcars-bar
+  position relative
+  height 100%
+  min-width 2rem
+  box-sizing border-box
+  color var(--lcars-text-invert, $lcars-text-invert)
+  lcars-fill(primary)
+
+  &.fill
+    flex 1 1 auto
+  &.cap-left
+    pill-left()
+  &.cap-right
+    pill-right()
+  &.cap-both
+    pill()
+
+  // The little black stripe that "plugs into" a cap
+  &.lcars-bar--decorated::after
+    decorator-stripe(right)
+  &.lcars-bar--decorated.cap-left::after
+    decorator-stripe(left)
+
+  // Inset title: a black plaque with light text riding the bar
+  &__title
+    position absolute
+    top 50%
+    right 1rem
+    transform translateY(-50%)
+    background var(--lcars-bg, $lcars-bg)
+    color var(--lcars-text, $lcars-text)
+    font-size 1.1rem
+    font-weight 700
+    text-transform uppercase
+    letter-spacing 0.06em
+    padding 0 0.4rem
+    line-height var(--lcars-bar-thickness, $lcars-bar-thickness)
+    white-space nowrap
+    &.left
+      right auto
+      left 1rem
+
+  lcars-color-variants()
+
+// Vertical bar (a sidebar rail)
+.lcars-bar-vertical
+  position relative
+  width var(--lcars-bar-thickness, $lcars-bar-thickness)
+  min-width var(--lcars-bar-thickness, $lcars-bar-thickness)
+  height 100%
+  box-sizing border-box
+  lcars-fill(primary)
+  &.cap-top
+    border-top-left-radius var(--lcars-radius, $lcars-radius)
+    border-top-right-radius var(--lcars-radius, $lcars-radius)
+  &.cap-bottom
+    border-bottom-left-radius var(--lcars-radius, $lcars-radius)
+    border-bottom-right-radius var(--lcars-radius, $lcars-radius)
+  lcars-color-variants()

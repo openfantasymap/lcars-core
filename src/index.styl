@@ -1,0 +1,68 @@
+// =============================================================================
+//  LCARS Component Library  ·  @ofm/lcars-lib
+// -----------------------------------------------------------------------------
+//  Single entry point. Import this to get the whole library:
+//
+//      @import '@ofm/lcars-lib/src/index'      // Stylus
+//      <link rel="stylesheet" href=".../dist/lcars.css">  // compiled
+//
+//  Or cherry-pick tokens + mixins to compose your own widgets:
+//
+//      @import '@ofm/lcars-lib/src/lib/tokens'
+//      @import '@ofm/lcars-lib/src/lib/mixins'
+// =============================================================================
+
+// --- Foundations -------------------------------------------------------------
+@import 'lib/tokens'
+@import 'lib/themes'
+@import 'lib/mixins'
+@import 'lib/base'
+@import 'lib/layout'
+@import 'lib/grid'
+
+// --- Primitives --------------------------------------------------------------
+@import 'lib/components/elbow'
+@import 'lib/components/bar'
+@import 'lib/components/bracket'
+@import 'lib/components/textbox'
+@import 'lib/components/button'
+
+// --- Tools -------------------------------------------------------------------
+@import 'lib/components/toggle'
+@import 'lib/components/slider'
+@import 'lib/components/keypad'
+@import 'lib/components/indicator'
+
+// --- Systems -----------------------------------------------------------------
+@import 'lib/components/gauge'
+@import 'lib/components/bargraph'
+@import 'lib/components/datacascade'
+@import 'lib/components/warpcore'
+@import 'lib/components/alert'
+
+// --- Navigation --------------------------------------------------------------
+@import 'lib/components/nav'
+@import 'lib/components/tabs'
+@import 'lib/components/breadcrumb'
+
+// --- Ship navigation (CONN / helm) -------------------------------------------
+@import 'lib/components/compass'
+@import 'lib/components/scanner'
+@import 'lib/components/starmap'
+@import 'lib/components/helm'
+
+// --- Engineering -------------------------------------------------------------
+@import 'lib/components/conduit'
+@import 'lib/components/power'
+@import 'lib/components/msd'
+
+// --- Communications ----------------------------------------------------------
+@import 'lib/components/comms'
+@import 'lib/components/waveform'
+@import 'lib/components/hail'
+
+// --- Overview (annotated SVG schematic) --------------------------------------
+@import 'lib/components/overview'
+
+// --- Transporter -------------------------------------------------------------
+@import 'lib/components/transporter'

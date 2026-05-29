@@ -1,0 +1,113 @@
+// =============================================================================
+//  Component · Bearing compass (CONN)
+// -----------------------------------------------------------------------------
+//  A heading rose with a rotating needle. Drive the needle with `--heading`
+//  (0–360°); show the digital course/mark in the centre readout.
+//
+//    <div class="lcars-compass" style="--heading:87;">
+//      <span class="lcars-compass__cardinal lcars-compass__cardinal--n">N</span>
+//      <span class="lcars-compass__cardinal lcars-compass__cardinal--e">E</span>
+//      <span class="lcars-compass__cardinal lcars-compass__cardinal--s">S</span>
+//      <span class="lcars-compass__cardinal lcars-compass__cardinal--w">W</span>
+//      <div class="lcars-compass__needle"></div>
+//      <div class="lcars-compass__hub"></div>
+//      <div class="lcars-compass__readout">087<small>MARK 21</small></div>
+//    </div>
+// =============================================================================
+
+.lcars-compass
+  --heading 0
+  --compass-size 14rem
+  position relative
+  width var(--compass-size)
+  height var(--compass-size)
+  border-radius 50%
+  background var(--lcars-panel, $lcars-panel)
+  box-shadow inset 0 0 0 3px var(--lcars-primary, $lcars-primary)
+
+  // Tick ring: conic wedges masked to the rim by the inner disc (::after)
+  &::before
+    content ''
+    position absolute
+    inset 0.5rem
+    border-radius 50%
+    background repeating-conic-gradient(from 0deg, var(--lcars-muted, $lcars-muted) 0deg 0.6deg, transparent 0.6deg 15deg)
+  &::after
+    content ''
+    position absolute
+    inset 1.3rem
+    border-radius 50%
+    background var(--lcars-panel, $lcars-panel)
+
+  &__cardinal
+    position absolute
+    z-index 1
+    font-weight 700
+    font-size 0.95rem
+    color var(--lcars-secondary, $lcars-secondary)
+    &--n
+      top 0.55rem
+      left 50%
+      transform translateX(-50%)
+    &--e
+      right 0.7rem
+      top 50%
+      transform translateY(-50%)
+    &--s
+      bottom 0.55rem
+      left 50%
+      transform translateX(-50%)
+    &--w
+      left 0.7rem
+      top 50%
+      transform translateY(-50%)
+
+  // Needle: points to --heading (0 = N, clockwise)
+  &__needle
+    position absolute
+    left calc(50% - 0.18rem)
+    bottom 50%
+    z-index 2
+    width 0.36rem
+    height 38%
+    border-radius 0.18rem
+    background linear-gradient(var(--lcars-danger, $lcars-danger), var(--lcars-pale-canary, $lcars-pale-canary))
+    transform-origin bottom center
+    transform rotate(calc(var(--heading) * 1deg))
+    transition transform 0.4s ease
+
+  &__hub
+    position absolute
+    z-index 3
+    left 50%
+    top 50%
+    width 1rem
+    height 1rem
+    border-radius 50%
+    background var(--lcars-primary, $lcars-primary)
+    transform translate(-50%, -50%)
+
+  // Digital course readout, below the hub
+  &__readout
+    position absolute
+    z-index 3
+    left 50%
+    bottom 22%
+    transform translateX(-50%)
+    display flex
+    flex-direction column
+    align-items center
+    line-height 1
+    font-weight 700
+    font-size 1.5rem
+    color var(--lcars-primary, $lcars-primary)
+    font-variant-numeric tabular-nums
+    small
+      font-size 0.6rem
+      letter-spacing 0.08em
+      color var(--lcars-muted, $lcars-muted)
+
+  // Colour the needle/readout by role
+  for $role in $lcars-variant-roles
+    &.lcars-compass--{$role} .lcars-compass__readout
+      color role($role)

@@ -1,0 +1,184 @@
+// =============================================================================
+//  LCARS · Mixins & Functions
+// -----------------------------------------------------------------------------
+//  Reusable building blocks so apps can compose their own LCARS widgets in
+//  Stylus without copying geometry around:
+//
+//      @import '@ofm/lcars-lib/src/lib/tokens'
+//      @import '@ofm/lcars-lib/src/lib/mixins'
+//
+//      .my-corner
+//        lcars-elbow(left-bottom, 12rem, 5rem, 1.5rem, 9rem, 'accent')
+// =============================================================================
+
+// --- Resolve a semantic role name to a themeable colour ----------------------
+// `role('primary')` -> `var(--lcars-primary, #ffcc66)`.
+// Pass a literal colour straight through so callers can also use raw hex.
+$lcars-role-defaults = {
+  bg:        $lcars-bg,
+  panel:     $lcars-panel,
+  text:      $lcars-text,
+  primary:   $lcars-primary,
+  secondary: $lcars-secondary,
+  tertiary:  $lcars-tertiary,
+  accent:    $lcars-accent,
+  muted:     $lcars-muted,
+  danger:    $lcars-danger,
+  warning:   $lcars-warning,
+  success:   $lcars-success,
+  orange:        $lcars-orange,
+  'golden-tanoi':  $lcars-golden-tanoi,
+  butterscotch:  $lcars-butterscotch,
+  'pale-canary':   $lcars-pale-canary,
+  sunflower:     $lcars-sunflower,
+  tomato:        $lcars-tomato,
+  periwinkle:    $lcars-periwinkle,
+  'blue-bell':     $lcars-blue-bell,
+  lilac:         $lcars-lilac,
+  hopbush:       $lcars-hopbush,
+  ice:           $lcars-ice,
+  'red-alert':     $lcars-red-alert,
+  amber:         $lcars-amber,
+  'okuda-green':   $lcars-okuda-green
+}
+
+role($name)
+  if type($name) == 'color'
+    return $name
+  $fallback = $lcars-role-defaults[$name]
+  if $fallback == null
+    $fallback = $lcars-primary
+  return unquote('var(--lcars-' + $name + ', ' + ('' + $fallback) + ')')
+
+// --- Paint helper: background + svg fill share one colour --------------------
+lcars-fill($name = primary)
+  background-color role($name)
+  fill role($name)
+
+// --- Pill rounding -----------------------------------------------------------
+pill-left($r = $lcars-radius)
+  border-top-left-radius $r
+  border-bottom-left-radius $r
+
+pill-right($r = $lcars-radius)
+  border-top-right-radius $r
+  border-bottom-right-radius $r
+
+pill($r = $lcars-radius)
+  border-radius $r
+
+// --- Bar end caps -------------------------------------------------------------
+// The half-stadium pieces that terminate a row of LCARS bars.
+cap-left($r = $lcars-radius)
+  pill-left($r)
+
+cap-right($r = $lcars-radius)
+  pill-right($r)
+
+// --- The signature LCARS elbow -----------------------------------------------
+//  A chunky "L" connector: a thick arm meeting a thinner bar with a large
+//  outer sweep and a smaller inner radius.
+//
+//  $corner : left-top | left-bottom | right-top | right-bottom
+//            (names the *outer* rounded corner / where the sidebar sits)
+//  $w, $h  : overall footprint (the consumer can resize freely — arms hold)
+//  $bar    : thickness of the THIN horizontal arm  (= a standard top bar)
+//  $arm    : width     of the THICK vertical trunk (= a standard button/column)
+//  $name   : colour role
+//  $outer  : outer sweep radius
+//  $inner  : inner cut radius
+//
+//  The black notch is sized with calc(100% - arm/bar) so the trunk stays one
+//  button wide and the arm stays one bar tall at ANY footprint. Both are also
+//  overridable per-instance via --lcars-elbow-arm / --lcars-elbow-bar.
+lcars-elbow($corner = left-bottom, $w = 9.5rem, $h = 4.5rem, $bar = $lcars-bar-thickness, $arm = $lcars-unit-w, $name = primary, $outer = $lcars-radius-lg, $inner = $lcars-radius)
+  position relative
+  box-sizing border-box
+  width $w
+  min-width $arm
+  height $h
+  min-height $h
+  border-radius 0            // reset so corner classes are interchangeable
+  lcars-fill($name)
+
+  $bar-v = unquote('var(--lcars-elbow-bar, ' + $bar + ')')
+  $notch-w = unquote('calc(100% - var(--lcars-elbow-arm, ' + $arm + '))')
+  $notch-h = unquote('calc(100% - var(--lcars-elbow-bar, ' + $bar + '))')
+
+  &::after
+    content ''
+    display block
+    position absolute
+    width $notch-w
+    height $notch-h
+    background var(--lcars-bg, $lcars-bg)
+    top auto
+    right auto
+    bottom auto
+    left auto
+    border-radius 0
+
+  if $corner == left-bottom
+    // trunk on the left, thin arm along the TOP, outer sweep = top-left
+    border-top-left-radius $outer
+    &::after
+      right 0
+      top $bar-v
+      border-top-left-radius $inner
+  else if $corner == left-top
+    // trunk on the left, thin arm along the BOTTOM, outer sweep = bottom-left
+    border-bottom-left-radius $outer
+    &::after
+      right 0
+      bottom $bar-v
+      border-bottom-left-radius $inner
+  else if $corner == right-bottom
+    // trunk on the right, thin arm along the TOP, outer sweep = top-right
+    border-top-right-radius $outer
+    &::after
+      left 0
+      top $bar-v
+      border-top-right-radius $inner
+  else if $corner == right-top
+    // trunk on the right, thin arm along the BOTTOM, outer sweep = bottom-right
+    border-bottom-right-radius $outer
+    &::after
+      left 0
+      bottom $bar-v
+      border-bottom-right-radius $inner
+
+// --- Decorator stripe: the little black notch at a block's inner edge --------
+decorator-stripe($side = right)
+  content ''
+  display block
+  position absolute
+  top 0
+  width $lcars-border
+  height 100%
+  background var(--lcars-bg, $lcars-bg)
+  if $side == right
+    right $lcars-border
+  else
+    left $lcars-border
+
+// --- Colour variant modifiers -------------------------------------------------
+//  Call inside a component block to stamp out `&--primary`, `&--danger`, … that
+//  repaint background + svg fill. Text colour is left to the component.
+$lcars-variant-roles = 'primary' 'secondary' 'tertiary' 'accent' 'muted' 'danger' 'warning' 'success' 'golden-tanoi' 'periwinkle' 'lilac' 'hopbush' 'pale-canary' 'butterscotch' 'tomato' 'sunflower'
+
+lcars-color-variants()
+  for $r in $lcars-variant-roles
+    &--{$r}
+      lcars-fill($r)
+
+// --- Visually-hidden (a11y) ---------------------------------------------------
+visually-hidden()
+  position absolute
+  width 1px
+  height 1px
+  padding 0
+  margin -1px
+  overflow hidden
+  clip rect(0 0 0 0)
+  white-space nowrap
+  border 0

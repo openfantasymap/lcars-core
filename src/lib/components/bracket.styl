@@ -1,0 +1,55 @@
+// =============================================================================
+//  Component · Bracket / Frame
+// -----------------------------------------------------------------------------
+//  The chunky "[ ]" rails that frame a content region.
+//
+//    <div class="lcars-bracket lcars-bracket--full">…content…</div>
+//    <div class="lcars-bracket lcars-bracket--left lcars-bracket--danger">…</div>
+// =============================================================================
+
+.lcars-bracket
+  box-sizing border-box
+  border-style solid
+  border-color var(--lcars-primary, $lcars-primary)
+  border-width 0
+  background transparent
+  padding 0.75rem
+  $r = var(--lcars-radius, $lcars-radius)
+
+  &--left
+    border-left-width 0.75rem
+    border-top-width 0.5rem
+    border-bottom-width 0.5rem
+    border-top-left-radius $r
+    border-bottom-left-radius $r
+  &--right
+    border-right-width 0.75rem
+    border-top-width 0.5rem
+    border-bottom-width 0.5rem
+    border-top-right-radius $r
+    border-bottom-right-radius $r
+  &--top
+    border-top-width 0.75rem
+    border-left-width 0.5rem
+    border-right-width 0.5rem
+    border-top-left-radius $r
+    border-top-right-radius $r
+  &--bottom
+    border-bottom-width 0.75rem
+    border-left-width 0.5rem
+    border-right-width 0.5rem
+    border-bottom-left-radius $r
+    border-bottom-right-radius $r
+  &--full
+    border-width 0.75rem
+    border-radius $r
+  &--solid
+    background var(--lcars-primary, $lcars-primary)
+    color var(--lcars-text-invert, $lcars-text-invert)
+
+  // Border-colour variants (frames are coloured by their border, not fill)
+  for $role in $lcars-variant-roles
+    &.lcars-bracket--{$role}
+      border-color role($role)
+    &.lcars-bracket--{$role}.lcars-bracket--solid
+      background role($role)

@@ -1,0 +1,80 @@
+// =============================================================================
+//  Component · Text box & Readout
+// -----------------------------------------------------------------------------
+//  Black data plaques for labels and live values.
+//
+//    <div class="lcars-textbox lcars-textbox--right">STARDATE 47988.1</div>
+//
+//    <div class="lcars-readout">
+//      <span class="lcars-readout__label">Shields</span>
+//      <span class="lcars-readout__value">98%</span>
+//    </div>
+// =============================================================================
+
+.lcars-textbox
+  display inline-flex
+  flex-direction row
+  align-items flex-start
+  box-sizing border-box
+  min-width var(--lcars-unit-w, $lcars-unit-w)
+  min-height var(--lcars-unit-h, $lcars-unit-h)
+  padding 0.25rem 0.5rem
+  background var(--lcars-bg, $lcars-bg)
+  color var(--lcars-text, $lcars-text)
+  font-weight 700
+  text-transform uppercase
+  letter-spacing 0.03em
+
+  // Sizes
+  &--big
+    font-size 1.4rem
+  &--large
+    font-size 2rem
+  &--huge
+    font-size 3.4rem
+    min-height 6rem
+
+  // Alignment
+  &--center
+    justify-content center
+  &--right
+    justify-content flex-end
+  &--middle
+    align-items center
+  &--bottom
+    align-items flex-end
+
+  // Tinted text
+  for $role in $lcars-variant-roles
+    &.lcars-textbox--text-{$role}
+      color role($role)
+
+// Label / value pair
+.lcars-readout
+  display inline-flex
+  flex-direction column
+  justify-content flex-end
+  box-sizing border-box
+  min-width var(--lcars-unit-w, $lcars-unit-w)
+  padding 0.25rem 0.5rem
+  background var(--lcars-bg, $lcars-bg)
+
+  &__label
+    font-size 0.8rem
+    text-transform uppercase
+    letter-spacing 0.08em
+    color var(--lcars-muted, $lcars-muted)
+  &__value
+    font-size 2rem
+    font-weight 700
+    line-height 1
+    color var(--lcars-primary, $lcars-primary)
+    font-variant-numeric tabular-nums
+
+  &--right
+    align-items flex-end
+    text-align right
+
+  for $role in $lcars-variant-roles
+    &.lcars-readout--{$role} &__value
+      color role($role)

@@ -1,0 +1,73 @@
+// =============================================================================
+//  Component · Elbow
+// -----------------------------------------------------------------------------
+//  The signature LCARS "L" connector: a thick vertical trunk (one button wide)
+//  meeting a thin horizontal arm (one bar tall). Resize freely via width/height
+//  — the arm and trunk hold their standard thickness at any footprint.
+//
+//    <div class="lcars-elbow left-bottom lcars-elbow--primary"
+//         style="width:16rem;height:5rem;">
+//      <span class="lcars-elbow__label">DECK 5</span>
+//    </div>
+//
+//  Corners: left-top · left-bottom · right-top · right-bottom
+//  Tune proportions with --lcars-elbow-arm (trunk width) and
+//  --lcars-elbow-bar (arm thickness).
+// =============================================================================
+
+.lcars-elbow
+  display block
+  color var(--lcars-text-invert, $lcars-text-invert)
+  // default corner so a bare .lcars-elbow still renders
+  lcars-elbow(left-bottom)
+
+  &.left-bottom
+    lcars-elbow(left-bottom)
+  &.left-top
+    lcars-elbow(left-top)
+  &.right-bottom
+    lcars-elbow(right-bottom)
+  &.right-top
+    lcars-elbow(right-top)
+
+  // Taller trunk
+  &.lcars-elbow--tall
+    height 9.5rem
+    min-height 9.5rem
+
+  // Colour variants (--primary, --danger, …)
+  lcars-color-variants()
+
+  // Label rides the trunk, aligned to the bend. Defaults to the left-bottom
+  // layout (trunk left, free end bottom); corner classes flip it.
+  &__label
+    position absolute
+    box-sizing border-box
+    width var(--lcars-elbow-arm, 7.5rem)
+    padding 0.15rem 0.6rem
+    color var(--lcars-text-invert, $lcars-text-invert)
+    font-weight 700
+    text-transform uppercase
+    letter-spacing 0.04em
+    font-size 0.95rem
+    line-height 1.1
+    pointer-events none
+    left 0
+    right auto
+    bottom 0.15rem
+    top auto
+    text-align right
+
+  &.left-top &__label
+    top 0.15rem
+    bottom auto
+  &.right-bottom &__label
+    left auto
+    right 0
+    text-align left
+  &.right-top &__label
+    left auto
+    right 0
+    top 0.15rem
+    bottom auto
+    text-align left

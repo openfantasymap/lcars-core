@@ -1,0 +1,70 @@
+// =============================================================================
+//  Component · Data cascade
+// -----------------------------------------------------------------------------
+//  The endlessly scrolling telemetry log. Duplicate the stream's children once
+//  so the loop is seamless.
+//
+//    <div class="lcars-cascade">
+//      <div class="lcars-cascade__stream">
+//        <span class="lcars-cascade__line">SCAN 0x4F · NOMINAL</span>
+//        … (repeat the set twice) …
+//      </div>
+//    </div>
+// =============================================================================
+
+.lcars-cascade
+  --rate 9s
+  position relative
+  height 12rem
+  overflow hidden
+  padding 0.5rem 0.75rem
+  background var(--lcars-panel, $lcars-panel)
+  border-radius var(--lcars-gap, $lcars-gap)
+  box-shadow inset 0 0 0 2px var(--lcars-muted, $lcars-muted)
+
+  // top/bottom fade so lines emerge and dissolve
+  &::before,
+  &::after
+    content ''
+    position absolute
+    left 0
+    right 0
+    height 2rem
+    pointer-events none
+    z-index 1
+  &::before
+    top 0
+    background linear-gradient(var(--lcars-panel, $lcars-panel), transparent)
+  &::after
+    bottom 0
+    background linear-gradient(transparent, var(--lcars-panel, $lcars-panel))
+
+  &__stream
+    display flex
+    flex-direction column
+    gap 0.15rem
+    animation lcars-cascade-scroll var(--rate) linear infinite
+
+  &__line
+    font-family var(--lcars-font, $lcars-font)
+    font-size 0.9rem
+    letter-spacing 0.03em
+    line-height 1.5
+    white-space nowrap
+    color var(--lcars-secondary, $lcars-secondary)
+    font-variant-numeric tabular-nums
+    &.is-alert
+      color var(--lcars-danger, $lcars-danger)
+    &.is-ok
+      color var(--lcars-success, $lcars-success)
+
+  &--fast
+    --rate 4s
+  &--paused &__stream
+    animation-play-state paused
+
+@keyframes lcars-cascade-scroll
+  from
+    transform translateY(0)
+  to
+    transform translateY(-50%)

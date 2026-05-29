@@ -1,0 +1,69 @@
+// =============================================================================
+//  Component · EPS conduit (Engineering)
+// -----------------------------------------------------------------------------
+//  An energy conduit with flowing plasma. `--load` (0–100) sets how full it is;
+//  `--rate` sets the flow speed. Pure CSS animation; bind --load to live power.
+//
+//    <div class="lcars-conduit" style="--load:70;--rate:1.2s;"
+//         data-bind-style="--load: epsLoad">
+//      <div class="lcars-conduit__plasma"></div>
+//    </div>
+//
+//  States: --critical (red, fast) · --offline (dim, still). --vertical flips it.
+// =============================================================================
+
+.lcars-conduit
+  --load 70
+  --rate 1.2s
+  --conduit-color var(--lcars-accent, $lcars-accent)
+  position relative
+  height 1.5rem
+  border-radius 0.3rem
+  background var(--lcars-bg, $lcars-bg)
+  box-shadow inset 0 0 0 2px var(--lcars-muted, $lcars-muted)
+  overflow hidden
+
+  &__plasma
+    position absolute
+    left 0
+    top 0
+    height 100%
+    width calc(var(--load) * 1%)
+    background repeating-linear-gradient(90deg, var(--conduit-color) 0, var(--lcars-pale-canary, $lcars-pale-canary) 0.6rem, var(--conduit-color) 1.2rem)
+    background-size 1.2rem 100%
+    filter brightness(1.1)
+    animation lcars-conduit-flow var(--rate) linear infinite
+    transition width 0.3s ease
+
+  &--critical
+    --conduit-color var(--lcars-danger, $lcars-danger)
+    --rate 0.4s
+    box-shadow inset 0 0 0 2px var(--lcars-danger, $lcars-danger)
+
+  &--offline
+    .lcars-conduit__plasma
+      animation none
+      filter grayscale(1) brightness(0.5)
+      opacity 0.3
+
+  // Vertical conduit (flow bottom → top)
+  &--vertical
+    width 1.5rem
+    height 100%
+    min-height 8rem
+    .lcars-conduit__plasma
+      width 100%
+      height calc(var(--load) * 1%)
+      top auto
+      bottom 0
+      background repeating-linear-gradient(0deg, var(--conduit-color) 0, var(--lcars-pale-canary, $lcars-pale-canary) 0.6rem, var(--conduit-color) 1.2rem)
+      background-size 100% 1.2rem
+      animation lcars-conduit-flow-v var(--rate) linear infinite
+      transition height 0.3s ease
+
+@keyframes lcars-conduit-flow
+  to
+    background-position 1.2rem 0
+@keyframes lcars-conduit-flow-v
+  to
+    background-position 0 1.2rem

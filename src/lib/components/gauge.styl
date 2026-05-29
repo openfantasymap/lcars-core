@@ -1,0 +1,71 @@
+// =============================================================================
+//  Component · Gauge (radial ring meter)
+// -----------------------------------------------------------------------------
+//  A circular fill meter driven by `--value` (0–100). Pure CSS conic-gradient.
+//
+//    <div class="lcars-gauge lcars-gauge--primary" style="--value:68">
+//      <span class="lcars-gauge__value">68<small>%</small></span>
+//      <span class="lcars-gauge__label">Shields</span>
+//    </div>
+// =============================================================================
+
+.lcars-gauge
+  --value 50
+  --gauge-size 9rem
+  --gauge-ring 1.4rem
+  position relative
+  display grid
+  place-items center
+  width var(--gauge-size)
+  height var(--gauge-size)
+  border-radius 50%
+  background conic-gradient(var(--lcars-primary, $lcars-primary) calc(var(--value) * 1%), var(--lcars-panel, $lcars-panel) calc(var(--value) * 1%))
+  transition background 0.3s ease
+
+  // hub (knocks the ring out of the disc)
+  &::before
+    content ''
+    position absolute
+    inset var(--gauge-ring)
+    border-radius 50%
+    background var(--lcars-bg, $lcars-bg)
+
+  &__value
+    position relative
+    z-index 1
+    font-size 2rem
+    font-weight 700
+    line-height 1
+    color var(--lcars-primary, $lcars-primary)
+    font-variant-numeric tabular-nums
+    small
+      font-size 0.9rem
+      opacity 0.7
+
+  &__label
+    position relative
+    z-index 1
+    margin-top 0.25rem
+    font-size 0.75rem
+    text-transform uppercase
+    letter-spacing 0.08em
+    color var(--lcars-muted, $lcars-muted)
+
+  // Sizes
+  &--sm
+    --gauge-size 6rem
+    --gauge-ring 1rem
+    .lcars-gauge__value
+      font-size 1.3rem
+  &--lg
+    --gauge-size 13rem
+    --gauge-ring 2rem
+    .lcars-gauge__value
+      font-size 3rem
+
+  // Colour variants recolour the arc + value text
+  for $role in $lcars-variant-roles
+    &.lcars-gauge--{$role}
+      background conic-gradient(role($role) calc(var(--value) * 1%), var(--lcars-panel, $lcars-panel) calc(var(--value) * 1%))
+    &.lcars-gauge--{$role} .lcars-gauge__value
+      color role($role)

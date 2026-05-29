@@ -1,0 +1,100 @@
+// =============================================================================
+//  Component · Comms panel (Communications)
+// -----------------------------------------------------------------------------
+//  A channel list with per-channel signal strength + status. Bind each
+//  channel's --signal to live link quality.
+//
+//    <div class="lcars-comms">
+//      <div class="lcars-comms__header">
+//        <span class="lcars-comms__title">Subspace Comms</span>
+//        <span class="lcars-comms__freq">141.55 MHz</span>
+//      </div>
+//      <div class="lcars-comms__channel is-active">
+//        <span class="lcars-indicator__light"></span>
+//        <span class="lcars-comms__name">Starfleet Command</span>
+//        <div class="lcars-comms__signal" style="--signal:90;"><div class="lcars-comms__signal-fill"></div></div>
+//      </div>
+//      …
+//    </div>
+// =============================================================================
+
+.lcars-comms
+  display flex
+  flex-direction column
+  gap 0.4rem
+  box-sizing border-box
+  min-width 22rem
+  padding 1rem
+  background var(--lcars-panel, $lcars-panel)
+  border-radius var(--lcars-radius, $lcars-radius)
+
+  &__header
+    display flex
+    justify-content space-between
+    align-items baseline
+    margin-bottom 0.25rem
+  &__title
+    font-weight 700
+    text-transform uppercase
+    letter-spacing 0.06em
+    color var(--lcars-primary, $lcars-primary)
+  &__freq
+    font-variant-numeric tabular-nums
+    color var(--lcars-muted, $lcars-muted)
+    font-size 0.85rem
+
+  &__channel
+    display grid
+    grid-template-columns 1rem 1fr 5rem
+    align-items center
+    gap 0.6rem
+    padding 0.3rem 0.5rem
+    border-radius 0.3rem
+    background var(--lcars-bg, $lcars-bg)
+    .lcars-indicator__light
+      width 0.75rem
+      height 0.75rem
+      background var(--lcars-muted, $lcars-muted)
+      box-shadow none
+    &.is-active
+      box-shadow inset 0 0 0 2px var(--lcars-primary, $lcars-primary)
+      .lcars-indicator__light
+        background var(--lcars-success, $lcars-success)
+        box-shadow 0 0 0.4rem var(--lcars-success, $lcars-success)
+    &.is-muted-channel
+      opacity 0.5
+
+  &__name
+    font-weight 700
+    font-size 0.9rem
+    text-transform uppercase
+    letter-spacing 0.02em
+    color var(--lcars-text, $lcars-text)
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+
+  // Segmented signal-strength meter (data-driven by --signal)
+  &__signal
+    --signal 50
+    position relative
+    height 0.9rem
+    border-radius 0.2rem
+    background var(--lcars-bg, $lcars-bg)
+    box-shadow inset 0 0 0 1px var(--lcars-muted, $lcars-muted)
+    overflow hidden
+    &::after
+      content ''
+      position absolute
+      inset 0
+      background repeating-linear-gradient(90deg, transparent 0 calc(20% - 1px), var(--lcars-bg, $lcars-bg) calc(20% - 1px) 20%)
+      z-index 1
+      pointer-events none
+  &__signal-fill
+    position absolute
+    left 0
+    top 0
+    height 100%
+    width calc(var(--signal) * 1%)
+    background var(--lcars-success, $lcars-success)
+    transition width 0.3s ease

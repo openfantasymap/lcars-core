@@ -1,0 +1,51 @@
+// =============================================================================
+//  Component · Breadcrumb
+// -----------------------------------------------------------------------------
+//  A location trail. Separators are drawn with CSS so markup stays clean.
+//
+//    <nav class="lcars-breadcrumb">
+//      <a class="lcars-breadcrumb__crumb">USS Enterprise</a>
+//      <a class="lcars-breadcrumb__crumb">Deck 5</a>
+//      <span class="lcars-breadcrumb__crumb is-current">Main Engineering</span>
+//    </nav>
+// =============================================================================
+
+.lcars-breadcrumb
+  display flex
+  flex-wrap wrap
+  align-items center
+  gap 0.6rem
+  font-weight 700
+  text-transform uppercase
+  letter-spacing 0.05em
+  font-size 1rem
+
+  &__crumb
+    display inline-flex
+    align-items center
+    gap 0.6rem
+    color var(--lcars-secondary, $lcars-secondary)
+    text-decoration none
+    cursor pointer
+    transition color 0.12s ease
+    &:hover
+      color var(--lcars-pale-canary, $lcars-pale-canary)
+
+  // Separator chevron before every crumb except the first
+  &__crumb + &__crumb::before
+    content '\203A'  // ›
+    color var(--lcars-muted, $lcars-muted)
+    font-weight 700
+
+  &__crumb.is-current
+    color var(--lcars-primary, $lcars-primary)
+    cursor default
+    pointer-events none
+
+  // Tick-style separator instead of a chevron
+  &--ticks &__crumb + &__crumb::before
+    content ''
+    width 0.7rem
+    height 0.7rem
+    border-radius 50%
+    background var(--lcars-muted, $lcars-muted)

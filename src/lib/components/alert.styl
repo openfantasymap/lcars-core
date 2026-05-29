@@ -1,0 +1,77 @@
+// =============================================================================
+//  Component · Alert / Condition banner
+// -----------------------------------------------------------------------------
+//  A condition banner with pulsing end-caps. Use sparingly — this is a klaxon.
+//
+//    <div class="lcars-alert lcars-alert--red lcars-alert--flash">
+//      <span class="lcars-alert__cap"></span>
+//      <span class="lcars-alert__text">Red Alert · Hull Breach Deck 7</span>
+//      <span class="lcars-alert__cap"></span>
+//    </div>
+//
+//  Conditions: --red · --yellow · --blue · --green
+//  Add --flash to pulse the whole banner.
+// =============================================================================
+
+.lcars-alert
+  --alert-color var(--lcars-danger, $lcars-danger)
+  display flex
+  align-items center
+  gap var(--lcars-gap, $lcars-gap)
+  width 100%
+  box-sizing border-box
+  padding 0.4rem
+  border-radius var(--lcars-radius, $lcars-radius)
+  background var(--lcars-bg, $lcars-bg)
+  box-shadow inset 0 0 0 3px var(--alert-color)
+
+  &__cap
+    flex 0 0 2.5rem
+    align-self stretch
+    min-height 2.4rem
+    border-radius var(--lcars-radius, $lcars-radius)
+    background var(--alert-color)
+    animation lcars-alert-pulse 1s steps(1, end) infinite
+
+  &__text
+    flex 1 1 auto
+    text-align center
+    font-size 1.6rem
+    font-weight 700
+    text-transform uppercase
+    letter-spacing 0.12em
+    color var(--alert-color)
+
+  // Conditions
+  &--red
+    --alert-color var(--lcars-danger, $lcars-danger)
+  &--yellow
+    --alert-color var(--lcars-warning, $lcars-warning)
+  &--blue
+    --alert-color var(--lcars-periwinkle, $lcars-periwinkle)
+  &--green
+    --alert-color var(--lcars-success, $lcars-success)
+
+  // Flash the entire banner
+  &--flash
+    animation lcars-alert-flash 1s steps(1, end) infinite
+
+  // Solid fill variant (inverted)
+  &--solid
+    background var(--alert-color)
+    .lcars-alert__text
+      color var(--lcars-text-invert, $lcars-text-invert)
+    .lcars-alert__cap
+      background var(--lcars-bg, $lcars-bg)
+
+@keyframes lcars-alert-pulse
+  0%, 50%
+    opacity 1
+  50.01%, 100%
+    opacity 0.2
+
+@keyframes lcars-alert-flash
+  0%, 50%
+    box-shadow inset 0 0 0 3px var(--alert-color), 0 0 1.5rem var(--alert-color)
+  50.01%, 100%
+    box-shadow inset 0 0 0 3px var(--alert-color)

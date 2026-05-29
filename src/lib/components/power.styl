@@ -1,0 +1,91 @@
+// =============================================================================
+//  Component · Power distribution (Engineering)
+// -----------------------------------------------------------------------------
+//  A panel of system power allocations. Each row: label · allocation bar · value
+//  · status light. Bind each row's --value to live load.
+//
+//    <div class="lcars-power">
+//      <div class="lcars-power__row">
+//        <span class="lcars-power__label">Shields</span>
+//        <div class="lcars-power__bar" style="--value:82;"><div class="lcars-power__fill"></div></div>
+//        <span class="lcars-power__value">82%</span>
+//      </div>
+//      …
+//    </div>
+//
+//  Row state: is-warning / is-critical recolour the fill + value.
+// =============================================================================
+
+.lcars-power
+  display flex
+  flex-direction column
+  gap 0.45rem
+  box-sizing border-box
+  min-width 22rem
+  padding 1rem
+  background var(--lcars-panel, $lcars-panel)
+  border-radius var(--lcars-radius, $lcars-radius)
+
+  &__row
+    display grid
+    grid-template-columns 8rem 1fr 3rem
+    align-items center
+    gap 0.6rem
+
+  &__label
+    font-weight 700
+    text-transform uppercase
+    letter-spacing 0.03em
+    font-size 0.9rem
+    color var(--lcars-text, $lcars-text)
+
+  &__bar
+    position relative
+    height 1.2rem
+    border-radius 0.25rem
+    background var(--lcars-bg, $lcars-bg)
+    box-shadow inset 0 0 0 2px var(--lcars-muted, $lcars-muted)
+    overflow hidden
+
+  &__fill
+    position absolute
+    left 0
+    top 0
+    height 100%
+    width calc(var(--value) * 1%)
+    background var(--lcars-success, $lcars-success)
+    transition width 0.3s ease, background 0.2s ease
+
+  &__value
+    font-variant-numeric tabular-nums
+    font-weight 700
+    text-align right
+    color var(--lcars-text, $lcars-text)
+
+  // Row states
+  &__row.is-warning .lcars-power__fill
+    background var(--lcars-warning, $lcars-warning)
+  &__row.is-warning .lcars-power__value
+    color var(--lcars-warning, $lcars-warning)
+  &__row.is-critical .lcars-power__fill
+    background var(--lcars-danger, $lcars-danger)
+  &__row.is-critical .lcars-power__value
+    color var(--lcars-danger, $lcars-danger)
+  &__row.is-offline .lcars-power__fill
+    background var(--lcars-muted, $lcars-muted)
+    opacity 0.4
+
+  // Total / header row
+  &__header
+    display flex
+    justify-content space-between
+    align-items baseline
+    margin-bottom 0.25rem
+  &__title
+    font-weight 700
+    text-transform uppercase
+    letter-spacing 0.06em
+    color var(--lcars-primary, $lcars-primary)
+  &__total
+    font-variant-numeric tabular-nums
+    color var(--lcars-muted, $lcars-muted)

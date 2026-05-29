@@ -1,0 +1,79 @@
+// =============================================================================
+//  Component · Hail (Communications)
+// -----------------------------------------------------------------------------
+//  An incoming-transmission banner with caller info and actions.
+//
+//    <div class="lcars-hail lcars-hail--incoming">
+//      <span class="lcars-hail__icon"></span>
+//      <div class="lcars-hail__body">
+//        <span class="lcars-hail__title">Incoming Transmission</span>
+//        <span class="lcars-hail__subtitle">USS Defiant · Priority One</span>
+//      </div>
+//      <div class="lcars-hail__actions">
+//        <button class="lcars-button lcars-button--rounded lcars-button--success">Accept</button>
+//        <button class="lcars-button lcars-button--rounded lcars-button--danger">Reject</button>
+//      </div>
+//    </div>
+//
+//  Variants: --incoming (pulses) · --secure · --priority
+// =============================================================================
+
+.lcars-hail
+  --hail-color var(--lcars-secondary, $lcars-secondary)
+  display flex
+  align-items center
+  gap 0.9rem
+  box-sizing border-box
+  min-width 22rem
+  padding 0.75rem 1rem
+  border-radius var(--lcars-radius, $lcars-radius)
+  background var(--lcars-bg, $lcars-bg)
+  box-shadow inset 0 0 0 3px var(--hail-color)
+
+  &__icon
+    flex 0 0 auto
+    width 1.5rem
+    height 1.5rem
+    border-radius 50%
+    background var(--hail-color)
+    box-shadow 0 0 0.6rem var(--hail-color)
+
+  &__body
+    display flex
+    flex-direction column
+    flex 1 1 auto
+    min-width 0
+  &__title
+    font-weight 700
+    text-transform uppercase
+    letter-spacing 0.06em
+    color var(--hail-color)
+  &__subtitle
+    font-size 0.85rem
+    color var(--lcars-muted, $lcars-muted)
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+
+  &__actions
+    display flex
+    gap 0.4rem
+    flex 0 0 auto
+
+  // Variants
+  &--secure
+    --hail-color var(--lcars-success, $lcars-success)
+  &--priority
+    --hail-color var(--lcars-danger, $lcars-danger)
+
+  // Incoming: pulse the frame + icon
+  &--incoming
+    animation lcars-hail-glow 1.1s ease-in-out infinite
+    .lcars-hail__icon
+      animation lcars-pulse 1.1s ease-in-out infinite
+
+@keyframes lcars-hail-glow
+  0%, 100%
+    box-shadow inset 0 0 0 3px var(--hail-color)
+  50%
+    box-shadow inset 0 0 0 3px var(--hail-color), 0 0 1.4rem var(--hail-color)
