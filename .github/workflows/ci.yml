@@ -1,0 +1,29 @@
+# Build & checks on every push to main and on PRs.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Build CSS (Stylus)
+        run: npm run build
+      - name: CSS sanity (no leaked Stylus vars / broken calc)
+        run: |
+          node -e "const c=require('fs').readFileSync('dist/lcars.expanded.css','utf8'); if(/\\\$lcars|\"calc|undefined/.test(c)){console.error('CSS leak detected');process.exit(1)} console.log('css ok')"
+      - name: Build Storybook (static)
+        run: npm run build-storybook
+      - run: test -f storybook-static/index.html
