@@ -1,6 +1,6 @@
 {
   "name": "@openfantasymap/lcars-core",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Core LCARS (Star Trek Library Computer Access/Retrieval System) component library: themeable Stylus/CSS + a dependency-free data-binding runtime. Framework wrappers: @openfantasymap/lcars-react, @openfantasymap/lcars-ngx.",
   "type": "module",
   "license": "MIT",
@@ -21,6 +21,7 @@
   "exports": {
     ".": "./dist/lcars.css",
     "./css": "./dist/lcars.css",
+    "./dist/*": "./dist/*",
     "./styl": "./src/index.styl",
     "./js": "./src/js/index.js",
     "./src/*": "./src/*"
