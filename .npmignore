@@ -1,0 +1,13 @@
+# Presence of this file stops npm from falling back to .gitignore when packing,
+# so built `dist/` (git-ignored) is included in the published tarball.
+# The `files` allowlist in package.json still governs what ships.
+node_modules/
+storybook-static/
+.storybook/
+stories/
+test/
+*.log
+.DS_Store
+.vite/
+.github/
+.claude/
